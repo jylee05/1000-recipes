@@ -65,22 +65,12 @@ body {
   }
 }
 
-/* --- Recipe Grid 수정된 부분 --- */
 .recipe-grid {
   display: grid;
   gap: 2rem;
-  /*
-    auto-fill: 컨테이너 너비에 맞춰 가능한 많은 열을 자동으로 채웁니다.
-    minmax(18rem, 1fr): 각 열의 최소 너비는 18rem(약 288px)이고,
-    최대 너비는 남은 공간을 균등하게 나눠 가집니다.
-    이렇게 하면 미디어 쿼리 없이도 반응형으로 열 개수가 조절됩니다.
-  */
   grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
 }
 
-/* 이제 아래 미디어 쿼리는 필요 없으므로 제거합니다. */
-
-/* Recipe Card Component */
 .card {
   background-color: white;
   border-radius: 0.75rem;
@@ -102,7 +92,7 @@ body {
   position: relative;
   height: 12rem;
   overflow: hidden;
-  flex-shrink: 0; /* 이미지가 줄어들지 않도록 설정 */
+  flex-shrink: 0;
 }
 
 .card-image {
@@ -115,7 +105,7 @@ body {
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
-  flex-grow: 1; /* 내용 부분이 남은 공간을 모두 차지하도록 설정 */
+  flex-grow: 1;
 }
 
 .card-cuisine {
@@ -126,15 +116,16 @@ body {
 .card-title {
   font-size: 1.25rem;
   font-weight: bold;
+  color: #000000;
   margin: 0.25rem 0 0;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* 오타 수정: text-overf -> text-overflow: ellipsis */
+  text-overflow: ellipsis;
 }
 
 .card-footer {
-  margin-top: auto; /* 푸터를 항상 카드 하단에 고정 */
-  padding-top: 1rem; /* 제목과 간격 확보 */
+  margin-top: auto;
+  padding-top: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -159,7 +150,6 @@ body {
   color: #991b1b;
 }
 
-/* Pagination Component */
 .pagination {
   display: flex;
   justify-content: center;
