@@ -1,68 +1,321 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
+/* General Body Styles */
 body {
   margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f9fafb;
+  color: #333;
+}
+
+/* App Layout */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.app-header {
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header-title {
+  font-size: 1.875rem;
+  font-weight: bold;
+  color: #f97316;
+  text-align: center; /* 헤더 제목 중앙 정렬 */
+  margin: 0;
+}
+
+/* Page Common Styles */
+.page-container {
+  padding: 2rem 0;
+}
+
+.loading-container {
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  flex-direction: column;
+  gap: 1rem;
+  color: #4b5563;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* Loading Spinner Component */
+.loading-spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 4px solid #f3f4f6;
+  border-top-color: #f97316;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* --- Recipe Grid 수정된 부분 --- */
+.recipe-grid {
+  display: grid;
+  gap: 2rem;
+  /*
+    auto-fill: 컨테이너 너비에 맞춰 가능한 많은 열을 자동으로 채웁니다.
+    minmax(18rem, 1fr): 각 열의 최소 너비는 18rem(약 288px)이고,
+    최대 너비는 남은 공간을 균등하게 나눠 가집니다.
+    이렇게 하면 미디어 쿼리 없이도 반응형으로 열 개수가 조절됩니다.
+  */
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+}
+
+/* 이제 아래 미디어 쿼리는 필요 없으므로 제거합니다. */
+
+/* Recipe Card Component */
+.card {
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-image-wrapper {
+  position: relative;
+  height: 12rem;
+  overflow: hidden;
+  flex-shrink: 0; /* 이미지가 줄어들지 않도록 설정 */
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* 내용 부분이 남은 공간을 모두 차지하도록 설정 */
+}
+
+.card-cuisine {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 0.25rem 0 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* 오타 수정: text-overf -> text-overflow: ellipsis */
+}
+
+.card-footer {
+  margin-top: auto; /* 푸터를 항상 카드 하단에 고정 */
+  padding-top: 1rem; /* 제목과 간격 확보 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-difficulty {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  border-radius: 9999px;
+}
+
+.difficulty-easy {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+.difficulty-medium {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+.difficulty-hard {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+/* Pagination Component */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+}
+
+.page-btn {
+  border: 1px solid #e5e7eb;
+  background-color: white;
+  color: #374151;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.page-btn:hover:not(:disabled) {
+  background-color: #f3f4f6;
+}
+
+.page-btn.active {
+  background-color: #f97316;
+  color: white;
+  border-color: #f97316;
+  font-weight: bold;
+}
+
+.page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-ellipsis {
+  padding: 0.5rem 1rem;
+  color: #6b7280;
+}
+
+/* Detail Page */
+.detail-container {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  margin-top: 2rem;
+}
+
+.back-btn {
+  background-color: #f97316;
+  color: white;
+  font-weight: bold;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.back-btn:hover {
+  background-color: #ea580c;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 768px) {
+  .detail-grid {
+    grid-template-columns: 1fr 1fr;
   }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+}
+
+.detail-image {
+  width: 100%;
+  height: 100%;
+  min-height: 20rem;
+  object-fit: cover;
+}
+
+.detail-content {
+  padding: 2rem;
+}
+
+.detail-cuisine {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f97316;
+}
+
+.detail-title {
+  font-size: 2.25rem;
+  font-weight: bold;
+  margin: 0.5rem 0;
+}
+
+.detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  color: #4b5563;
+}
+
+.detail-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.detail-section {
+  border-top: 1px solid #e5e7eb;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+}
+
+.detail-section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.detail-ingredients-list {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  line-height: 1.75;
+}
+
+.detail-instructions-list {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.detail-instruction-item {
+  display: flex;
+  gap: 1rem;
+  line-height: 1.75;
+}
+
+.instruction-number {
+  flex-shrink: 0;
+  background-color: #f97316;
+  color: white;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
 }
