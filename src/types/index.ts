@@ -1,4 +1,3 @@
-// API 응답 데이터 구조에 맞춘 타입들을 정의합니다.
 export interface Recipe {
   id: number;
   name: string;
